@@ -201,7 +201,7 @@ public class Main extends javax.swing.JFrame {
                 tf_password.setText(res[4]);
                 tf_intervalo.setText(res[5]);
             } catch (Exception ex) {
-                ta_resultado.setText(ex.getMessage());
+                ta_resultado.setText("ERROR: "+ex.getMessage());
             }
         }
     }//GEN-LAST:event_formWindowOpened
@@ -212,13 +212,14 @@ public class Main extends javax.swing.JFrame {
         if (!file.exists()) {
             try {
                 file.createNewFile();
+                //Runtime.getRuntime().exec("attrib +H "+filename);
             } catch (IOException ex) {
-                ta_resultado.setText(ex.getMessage());
+                ta_resultado.setText("ERROR: "+ex.getMessage());
             }
         }
         PrintWriter writer;
         try {
-            writer = new PrintWriter(filename, "UTF-8");
+            writer = new PrintWriter(file);
             writer.print(
                     tf_ip.getText() + "|-|"
                     + tf_puerto.getText() + "|-|"
@@ -227,9 +228,10 @@ public class Main extends javax.swing.JFrame {
                     + tf_password.getText() + "|-|"
                     + tf_intervalo.getText());
             writer.close();
-        } catch (FileNotFoundException | UnsupportedEncodingException ex) {
-            ta_resultado.setText(ex.getMessage());
+        } catch (FileNotFoundException ex) {
+            ta_resultado.setText("ERROR: "+ex.getMessage());
         }
+      
     }//GEN-LAST:event_formWindowClosing
 
     public static void main(String args[]) {

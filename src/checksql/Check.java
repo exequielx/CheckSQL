@@ -8,6 +8,7 @@ package checksql;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -61,15 +62,15 @@ public class Check {
                         rs.close();
                         stmt.close();
                     } catch (Exception ex) {
-                        ta_resultado.setText(ex.getMessage());
+                        ta_resultado.setText("ERROR: " + ex.getMessage());
                         timer.cancel();
                     }
 
                 }
             };
             timer.schedule(task, 1, (Integer.parseInt(intervalo) * 1000));
-        } catch (Exception e) {
-            ta_resultado.setText(e.getMessage());
+        } catch (SQLException | NumberFormatException ex) {
+            ta_resultado.setText("ERROR: " + ex.getMessage());
             timer.cancel();
         }
     }
